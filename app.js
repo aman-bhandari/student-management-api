@@ -1,13 +1,27 @@
+require('dotenv').config()
 const express = require('express')
 
 const app = express()
 
-const port = 8000
-
+const connectDB = require('./db/connect')
+const studentRouter = require('./routes/student')
+app.use(express.json())
 app.get('/', (req, res) => {
   res.send('Student Management System')
 })
 
-app.listen(port, () => {
-  console.log('This server is listening on port ', port)
-})
+app.use('/api/v1/student', studentRouter)
+
+const port = 3000
+const start = async () => {
+  try {
+    await connectDB(process.env.MONGO_URI)
+    app.listen(port, () =>
+      console.log(`Server is listening on port ${port}...`)
+    )
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+start()
