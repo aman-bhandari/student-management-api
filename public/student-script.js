@@ -1,10 +1,10 @@
 const tableBody = document.querySelector('.list-of-students')
 const studentForm = document.querySelector('.student-form')
 const formName = document.querySelector('#name')
-const formAge = document.querySelector('#age')
+const formDob = document.querySelector('#dob')
 const formMobile = document.querySelector('#mobile')
 const formEmail = document.querySelector('#email')
-const formModal = document.querySelector('#myModal')
+const formModal = document.getElementById('myModal')
 let update = false
 let updateId = ''
 const showList = async (e) => {
@@ -56,9 +56,13 @@ tableBody.addEventListener('click', async (e) => {
 studentForm.addEventListener('submit', async (e) => {
   e.preventDefault()
   const name = formName.value
-  const age = formAge.value
   const mobile = formMobile.value
   const email = formEmail.value
+  const dob = new Date(formDob.value)
+  let month_diff = Date.now() - dob.getTime()
+  let age_dt = new Date(month_diff)
+  let year = age_dt.getUTCFullYear()
+  const age = Math.abs(year - 1970)
   if (!update) {
     await axios.post('api/v1/student', { name, age, mobile, email })
   } else {
@@ -74,7 +78,7 @@ studentForm.addEventListener('submit', async (e) => {
     updateId = ''
   }
   showList()
-  formAge.value = ''
+  formDob.value = ''
   formEmail.value = ''
   formMobile.value = ''
   formName.value = ''

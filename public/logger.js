@@ -8,7 +8,7 @@ window.addEventListener('DOMContentLoaded', async (e) => {
     .map((log) => {
       const { _id: logId, message, createdAt } = log
       return `
-        <li class="list-group-item list-group-item-primary">LogId: ${logId} | TimeStamp: ${createdAt} | ${message}</li>
+        <li class="list-group-item list-group-item-dark">LogId: ${logId} | TimeStamp: ${createdAt} | ${message}</li>
      `
     })
     .join('')
