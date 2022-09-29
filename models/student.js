@@ -7,13 +7,14 @@ const studentSchema = mongoose.Schema({
     minlength: 3,
     maxlength: 500,
   },
-  age: {
-    type: Number,
-    required: [true, 'Please provide age'],
+  dob: {
+    type: String,
+    required: [true, 'Please provide dob'],
   },
   mobile: {
     type: Number,
     required: [true, 'Please provide number'],
+    unique: true,
   },
   email: {
     type: String,

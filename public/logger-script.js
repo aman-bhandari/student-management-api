@@ -1,8 +1,14 @@
 const list = document.querySelector('.list-group')
+const logOut = document.querySelector('.log-out')
 window.addEventListener('DOMContentLoaded', async (e) => {
+  const token = localStorage.getItem('token')
   const {
     data: { logs },
-  } = await axios.get('api/v1/logger')
+  } = await axios.get('api/v1/logger', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
 
   const allLogs = logs
     .map((log) => {
@@ -13,4 +19,9 @@ window.addEventListener('DOMContentLoaded', async (e) => {
     })
     .join('')
   list.innerHTML = allLogs
+})
+
+logOut.addEventListener('click', (e) => {
+  localStorage.removeItem('token')
+  window.location.replace('./index.html')
 })
