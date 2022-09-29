@@ -5,7 +5,8 @@ const formAge = document.querySelector('#age')
 const formMobile = document.querySelector('#mobile')
 const formEmail = document.querySelector('#email')
 const formModal = document.querySelector('#myModal')
-
+let update = false
+let updateId = ''
 const showList = async (e) => {
   const {
     data: { students },
@@ -19,7 +20,15 @@ const showList = async (e) => {
                     <td>${age}</td>
                     <td>${mobile}</td>
                     <td>${email}</td>
-                    <td><button id="${studentId}" type="button" class="btn btn-outline-info updateBtn">UPDATE</button></td>
+                    <td>
+                          
+        <button id="${studentId}" type="button" class="btn btn-primary updateBtn" data-bs-toggle="modal" data-bs-target="#myModal">
+         UPDATE
+        </button>
+    
+
+                 
+                          </td>
                     <td><button id="${studentId}" type="button" class="btn btn-outline-danger deleteBtn">DELETE</button></td>
                 </tr>
       `
@@ -31,29 +40,42 @@ const showList = async (e) => {
 
 window.addEventListener('DOMContentLoaded', showList)
 
+tableBody.addEventListener('click', async (e) => {
+  let target = e.target
+  let id = target.id
+  if (target.classList.contains('deleteBtn')) {
+    await axios.delete(`/api/v1/student/${id}`)
+    showList()
+  }
+  if (target.classList.contains('updateBtn')) {
+    update = true
+    updateId = id
+  }
+})
+
 studentForm.addEventListener('submit', async (e) => {
   e.preventDefault()
-  console.log('chal riya')
   const name = formName.value
   const age = formAge.value
   const mobile = formMobile.value
   const email = formEmail.value
-  await axios.post('api/v1/student', { name, age, mobile, email })
+  if (!update) {
+    await axios.post('api/v1/student', { name, age, mobile, email })
+  } else {
+    update = false
+    console.log(update, updateId)
+    await axios.patch(`api/v1/student/${updateId}`, {
+      name,
+      age,
+      mobile,
+      email,
+    })
+
+    updateId = ''
+  }
   showList()
   formAge.value = ''
   formEmail.value = ''
   formMobile.value = ''
   formName.value = ''
-})
-
-tableBody.addEventListener('click', async (e) => {
-  let target = e.target
-  if (target.classList.contains('deleteBtn')) {
-    let id = target.id
-    await axios.delete(`/api/v1/student/${id}`)
-    showList()
-  }
-
-  if (target.classList.contains('updateBtn')) {
-  }
 })

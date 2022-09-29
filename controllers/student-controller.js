@@ -14,9 +14,11 @@ const createStudent = async (req, res) => {
   res.status(200).json({ student, log })
 }
 const updateStudent = async (req, res) => {
+  let { id: updateId } = req.params
+
   const student = await Student.findOneAndUpdate(
     {
-      email: req.body.email,
+      _id: updateId,
     },
     req.body,
     { new: true, runValidators: true }
@@ -28,7 +30,7 @@ const updateStudent = async (req, res) => {
   res.status(200).json({ student, log })
 }
 const deleteStudent = async (req, res) => {
-  const { id: studentId } = req.params
+  let { id: studentId } = req.params
   const student = await Student.findOneAndDelete({ _id: studentId })
   if (!student) throw new Error('no student')
   const log = await Logger.create({
