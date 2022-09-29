@@ -1,7 +1,12 @@
 const Student = require('../models/student')
 const Logger = require('../models/logger')
 
+const getAllStudents = async (req, res) => {
+  const students = await Student.find({})
+  res.status(200).json({ students })
+}
 const createStudent = async (req, res) => {
+  console.log(req.body)
   const student = await Student.create(req.body)
   const log = await Logger.create({
     message: `${student.name} is added in database`,
@@ -23,7 +28,8 @@ const updateStudent = async (req, res) => {
   res.status(200).json({ student, log })
 }
 const deleteStudent = async (req, res) => {
-  const student = await Student.findOneAndDelete({ mobile: req.body.mobile })
+  const { id: studentId } = req.params
+  const student = await Student.findOneAndDelete({ _id: studentId })
   if (!student) throw new Error('no student')
   const log = await Logger.create({
     message: `${student.name} is deleted from database`,
@@ -34,4 +40,5 @@ module.exports = {
   createStudent,
   updateStudent,
   deleteStudent,
+  getAllStudents,
 }

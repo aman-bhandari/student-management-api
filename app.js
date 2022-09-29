@@ -5,7 +5,10 @@ const app = express()
 
 const connectDB = require('./db/connect')
 const studentRouter = require('./routes/student')
+
+app.use(express.static('./public'))
 app.use(express.json())
+
 app.get('/', (req, res) => {
   res.send('Student Management System')
 })
