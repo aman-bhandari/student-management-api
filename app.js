@@ -5,7 +5,7 @@ const app = express()
 
 const connectDB = require('./db/connect')
 const studentRouter = require('./routes/student')
-
+const loggerRouter = require('./routes/logger')
 app.use(express.static('./public'))
 app.use(express.json())
 
@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/v1/student', studentRouter)
-
+app.use('/api/v1/logger', loggerRouter)
 const port = 3000
 const start = async () => {
   try {
