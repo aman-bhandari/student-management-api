@@ -1,6 +1,6 @@
 const adminForm = document.querySelector('.admin-form')
 const formPassword = document.querySelector('#pwd')
-
+const danger = document.querySelector('.alert-danger')
 adminForm.addEventListener('submit', async (e) => {
   e.preventDefault()
 
@@ -14,7 +14,6 @@ adminForm.addEventListener('submit', async (e) => {
     formPassword.value = ''
     window.location.replace('./student-list.html')
   } catch (error) {
-    console.log(error)
-    window.location.replace('./index.html')
+    danger.style.display = 'block'
   }
 })
