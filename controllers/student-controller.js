@@ -3,7 +3,7 @@ const Logger = require('../models/logger')
 const { StatusCodes } = require('http-status-codes')
 const { NotFoundError, BadRequestError } = require('../errors')
 const getAllStudents = async (req, res) => {
-  const students = await Student.find({})
+  const students = await Student.find({}).sort('-createdAt')
   res.status(StatusCodes.OK).json({ students })
 }
 const createStudent = async (req, res) => {
