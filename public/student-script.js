@@ -76,43 +76,46 @@ studentForm.addEventListener('submit', async (e) => {
   const email = formEmail.value
   const dob = formDob.value
   const token = localStorage.getItem('token')
+  try {
+    if (!update) {
+      await axios.post(
+        'api/v1/student',
 
-  if (!update) {
-    await axios.post(
-      'api/v1/student',
-
-      {
-        name,
-        dob,
-        mobile,
-        email,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
+        {
+          name,
+          dob,
+          mobile,
+          email,
         },
-      }
-    )
-  } else {
-    update = false
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+    } else {
+      update = false
 
-    await axios.patch(
-      `api/v1/student/${updateId}`,
+      await axios.patch(
+        `api/v1/student/${updateId}`,
 
-      {
-        name,
-        dob,
-        mobile,
-        email,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
+        {
+          name,
+          dob,
+          mobile,
+          email,
         },
-      }
-    )
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
 
-    updateId = ''
+      updateId = ''
+    }
+  } catch (error) {
+    console.log(error)
   }
   showList()
   formDob.value = ''
