@@ -6,17 +6,19 @@ const formMobile = document.querySelector('#mobile')
 const formEmail = document.querySelector('#email')
 const formModal = document.getElementById('myModal')
 const logOut = document.querySelector('.log-out')
+const totalCount = document.querySelector('.total-count')
 let update = false
 let updateId = ''
 const showList = async (e) => {
   const token = localStorage.getItem('token')
   const {
-    data: { students },
+    data: { students, total },
   } = await axios.get('/api/v1/student', {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   })
+  totalCount.innerText = total
   const allStudents = students
     .map((student) => {
       const { _id: studentId, name, dob, mobile, email } = student

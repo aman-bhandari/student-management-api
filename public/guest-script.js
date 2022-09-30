@@ -1,9 +1,10 @@
 const tableBody = document.querySelector('.list-of-students')
-
+const totalCount = document.querySelector('.total-count')
 const showList = async (e) => {
   const {
-    data: { students },
+    data: { students, total },
   } = await axios.get('/api/v1/student')
+  totalCount.innerText = total
   const allStudents = students
     .map((student) => {
       const { _id: studentId, name, dob, mobile, email } = student
