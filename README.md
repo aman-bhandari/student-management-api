@@ -1,7 +1,5 @@
 # student-management-api
 
-> **Archived learning-era repo (2022).** Preserved as evidence of self-taught Node.js backend work during 2019-2022. Not maintained. For current work see [aman-bhandari](https://github.com/aman-bhandari).
-
 A REST API for a student management system: authenticate admins, CRUD student records, and log every mutation to an append-only audit trail.
 
 ## What's in it
@@ -43,11 +41,3 @@ npm start
 # optional: populate DB with seed data
 node populate.js
 ```
-
-## Iteration history
-
-25 commits between 2022-09-29 and 2022-10-13 (~2 weeks of iterative work). Built immediately after e-commerce-api to practice the pattern independently on a new domain.
-
-## Why this is archived
-
-This repo is from the 2019-2022 self-taught period before I joined my current team. It worked end to end against a local MongoDB. The code reflects what I knew at the time; current standards (see [aman-bhandari pinned repos](https://github.com/aman-bhandari)) look different. The repo is kept public and archived as evidence of the iterative backend work that bridged 2019-2022.
